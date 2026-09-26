@@ -225,7 +225,7 @@ Step 5 → Download your summary as a PDF
 
 ## 👩‍💻 Author
 
-**NANDINI SAHARMA**
+**NANDINI SHARMA**
 
 ---
 
