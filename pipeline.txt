@@ -1,0 +1,50 @@
+from __future__ import annotations
+
+from pathlib import Path
+from typing import Dict, List
+
+from smart_lecture_summarizer.config import ARTIFACT_DIR, OUTPUT_DIR
+from smart_lecture_summarizer.extractors import ContentExtractor
+from smart_lecture_summarizer.nlp_engine import NLPSummarizer
+from smart_lecture_summarizer.pdf_exporter import PDFExporter
+
+
+class SmartLecturePipeline:
+    def __init__(self) -> None:
+        self.extractor = ContentExtractor()
+        self.summarizer = NLPSummarizer()
+        self.pdf_exporter = PDFExporter()
+
+    def run(self, input_path: Path, summary_length: str, job_id: str) -> Dict:
+        artifact_dir = ARTIFACT_DIR / job_id
+        extraction = self.extractor.extract(input_path=input_path, artifact_dir=artifact_dir)
+
+        summary = self.summarizer.summarize(extraction.text, summary_length=summary_length)
+        warnings: List[str] = []
+        warnings.extend(extraction.warnings)
+        warnings.extend(summary.warnings)
+
+        payload = {
+            "summary_text": summary.summary_text,
+            "key_points": summary.key_points,
+            "keywords": summary.keywords,
+            "method": summary.method,
+            "warnings": warnings,
+            "source": {
+                "source_type": extraction.source_type,
+                "input_file": input_path.name,
+                "text_length": len(extraction.text or ""),
+            },
+            "keyframes": extraction.keyframes,
+            "pdf_name": None,
+        }
+
+        pdf_name = f"{job_id}_summary.pdf"
+        pdf_path = OUTPUT_DIR / pdf_name
+        try:
+            self.pdf_exporter.export_summary(payload, pdf_path)
+            payload["pdf_name"] = pdf_name
+        except Exception as exc:
+            payload["warnings"].append(f"PDF export skipped: {exc}")
+
+        return payload
