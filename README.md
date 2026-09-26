@@ -225,17 +225,7 @@ Step 5 → Download your summary as a PDF
 
 ## 👩‍💻 Author
 
-**Divyanshi Rana**
-B.Tech Computer Science & Engineering (AI/ML)
-IIMT College of Engineering, Greater Noida, Uttar Pradesh
-
----
-
-## 📫 Connect
-
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Divyanshi_Rana-0077B5?style=flat&logo=linkedin)](https://linkedin.com/in/divyanshi-rana)
-[![GitHub](https://img.shields.io/badge/GitHub-Miini252003-181717?style=flat&logo=github)](https://github.com/Miini252003)
-[![Email](https://img.shields.io/badge/Email-divyanshirana2004@gmail.com-D14836?style=flat&logo=gmail)](mailto:divyanshirana2004@gmail.com)
+**NANDINI SAHARMA**
 
 ---
 
